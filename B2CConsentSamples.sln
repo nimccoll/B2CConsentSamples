@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CConsentAPI", "B2CConsentAPI\B2CConsentAPI.csproj", "{45819F59-7E57-4EAC-A5D5-632FA03E6903}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B2CConsentClient", "B2CConsentClient\B2CConsentClient.csproj", "{C62CF84E-7F15-4CBD-A453-BF4B7614B9B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Policies", "Policies", "{9C777652-1B25-49C8-AAA2-0A63142BE933}"
+	ProjectSection(SolutionItems) = preProject
+		SAMLServiceProvider\SignUpOrSignin.xml = SAMLServiceProvider\SignUpOrSignin.xml
+		SAMLServiceProvider\TrustFrameworkExtensions.xml = SAMLServiceProvider\TrustFrameworkExtensions.xml
+		SAMLServiceProvider\unified.cshtml = SAMLServiceProvider\unified.cshtml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45819F59-7E57-4EAC-A5D5-632FA03E6903}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45819F59-7E57-4EAC-A5D5-632FA03E6903}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45819F59-7E57-4EAC-A5D5-632FA03E6903}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45819F59-7E57-4EAC-A5D5-632FA03E6903}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62CF84E-7F15-4CBD-A453-BF4B7614B9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62CF84E-7F15-4CBD-A453-BF4B7614B9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62CF84E-7F15-4CBD-A453-BF4B7614B9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62CF84E-7F15-4CBD-A453-BF4B7614B9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49A26848-A846-4D2E-8C3E-2B7C2D9BBBAD}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://nimccoll.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = B2CConsentAPI\\B2CConsentAPI.csproj
+		SccProjectName1 = B2CConsentAPI
+		SccLocalPath1 = B2CConsentAPI
+		SccProjectUniqueName2 = B2CConsentClient\\B2CConsentClient.csproj
+		SccProjectName2 = B2CConsentClient
+		SccLocalPath2 = B2CConsentClient
+	EndGlobalSection
+EndGlobal
