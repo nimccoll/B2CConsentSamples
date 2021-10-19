@@ -17,5 +17,6 @@ namespace B2CConsentAPI.Models
         public string clientId { get; set; }
         public string objectId { get; set; }
         public string hasConsented { get; set; }
+        public string userRole { get; set; }
     }
 }

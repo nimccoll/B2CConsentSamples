@@ -4,12 +4,12 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" 
   PolicySchemaVersion="0.3.0.0" 
-  TenantId="{your b2c tenant name here}.onmicrosoft.com" 
+  TenantId="nimccollorgtenant.onmicrosoft.com" 
   PolicyId="B2C_1A_SAMLSP_TrustFrameworkExtensions" 
-  PublicPolicyUri="http://{your b2c tenant name here}.onmicrosoft.com/B2C_1A_SAMLSP_TrustFrameworkExtensions">
+  PublicPolicyUri="http://nimccollorgtenant.onmicrosoft.com/B2C_1A_SAMLSP_TrustFrameworkExtensions">
   
   <BasePolicy>
-    <TenantId>{your b2c tenant name here}.onmicrosoft.com</TenantId>
+    <TenantId>nimccollorgtenant.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_TrustFrameworkBase</PolicyId>
   </BasePolicy>
   <BuildingBlocks>
@@ -33,6 +33,16 @@
         <DisplayName>original_hasConsented</DisplayName>
         <DataType>string</DataType>
         <UserHelpText/>
+      </ClaimType>
+      <ClaimType Id="role">
+        <DisplayName>role</DisplayName>
+        <DataType>string</DataType>
+        <UserHelpText/>
+      </ClaimType>
+      <ClaimType Id="roles">
+        <DisplayName>roles</DisplayName>
+        <DataType>stringCollection</DataType>
+        <UserHelpText/>
       </ClaimType>      
     </ClaimsSchema>
   <ClaimsTransformations>
@@ -44,11 +54,31 @@
         <OutputClaim ClaimTypeReferenceId="original_hasConsented" TransformationClaimType="outputClaim"/>
       </OutputClaims>         
     </ClaimsTransformation>
+    <ClaimsTransformation Id="AddRole" TransformationMethod="AddParameterToStringCollection">
+      <InputClaims>
+        <InputClaim ClaimTypeReferenceId="roles" TransformationClaimType="collection" />
+      </InputClaims>
+      <InputParameters>
+        <InputParameter Id="item" DataType="string" Value="globalAdmin" />
+      </InputParameters>
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="roles" TransformationClaimType="collection" />
+      </OutputClaims>
+    </ClaimsTransformation>    
+    <ClaimsTransformation Id="AddUserRole" TransformationMethod="AddItemToStringCollection">
+      <InputClaims>
+        <InputClaim ClaimTypeReferenceId="role" TransformationClaimType="item" />
+        <InputClaim ClaimTypeReferenceId="roles" TransformationClaimType="collection" />
+      </InputClaims>
+      <OutputClaims>
+        <OutputClaim ClaimTypeReferenceId="roles" TransformationClaimType="collection" />
+      </OutputClaims>
+    </ClaimsTransformation>    
   </ClaimsTransformations>
   <ContentDefinitions>
 
       <ContentDefinition Id="api.signuporsignin">
-        <LoadUri>https://{your storage account name here}.blob.core.windows.net/azureblue/unified.cshtml</LoadUri>
+        <LoadUri>https://nimccollftab2c.blob.core.windows.net/azureblue/unified.cshtml</LoadUri>
         <RecoveryUri>~/common/default_page_error.html</RecoveryUri>
         <DataUri>urn:com:microsoft:aad:b2c:elements:unifiedssp:1.0.0</DataUri>
         <Metadata>
@@ -66,12 +96,12 @@
       <TechnicalProfiles>
         <TechnicalProfile Id="login-NonInteractive">
           <Metadata>
-            <Item Key="client_id">{ProxyIdentityExperienceFramework App ID}</Item>
-            <Item Key="IdTokenAudience">{IdentityExperienceFramework App ID}</Item>
+            <Item Key="client_id">d0edd819-ee30-45ed-82fb-529e5babfa9c</Item>
+            <Item Key="IdTokenAudience">ddade071-1d49-4b4e-9fbd-02dda24b3542</Item>
           </Metadata>
           <InputClaims>
-            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="{ProxyIdentityExperienceFramework App ID}" />
-            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="{IdentityExperienceFramework App ID}" />
+            <InputClaim ClaimTypeReferenceId="client_id" DefaultValue="d0edd819-ee30-45ed-82fb-529e5babfa9c" />
+            <InputClaim ClaimTypeReferenceId="resource_id" PartnerClaimType="resource" DefaultValue="ddade071-1d49-4b4e-9fbd-02dda24b3542" />
           </InputClaims>
         </TechnicalProfile>
       </TechnicalProfiles>
@@ -88,7 +118,7 @@
       <Metadata>
         <Item Key="WantsEncryptedAssertions">false</Item>
         <Item Key="WantsSignedAssertions">false</Item>
-        <Item Key="PartnerEntity">https://{your Salesforce URL}/.well-known/samlidp/nimccollOrg_B2C_Tenant.xml</Item>
+        <Item Key="PartnerEntity">https://nickoftime-dev-ed.my.salesforce.com/.well-known/samlidp/nimccollOrg_B2C_Tenant.xml</Item>
       </Metadata>
       <CryptographicKeys>
         <Key Id="SamlMessageSigning" StorageReferenceId="B2C_1A_SAMLSigningCert"/>
@@ -136,7 +166,7 @@
           <Description>Login with your Identity Server account</Description>
           <Protocol Name="OpenIdConnect" />
           <Metadata>
-            <Item Key="METADATA">https://{your Identity Server root URL}/.well-known/openid-configuration</Item>
+            <Item Key="METADATA">https://nimccollfta-idsrv4.azurewebsites.net/.well-known/openid-configuration</Item>
             <!-- Update the Client ID below to the Application ID -->
             <Item Key="client_id">b2c</Item>
             <Item Key="response_types">code</Item>
@@ -148,7 +178,7 @@
             <!-- The key below allows you to specify each of the Azure AD tenants that can be used to sign in. Update the GUIDs below for each tenant. -->
             <!-- <Item Key="ValidTokenIssuerPrefixes">https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47,https://sts.windows.net/dbc2cf49-cd0b-4bea-8e13-16cbba39aac6,https://sts.windows.net/18aa0090-a790-4975-89e1-74502d702712</Item> -->
             <!-- The commented key below specifies that users from any tenant can sign-in. Uncomment if you would like anyone with an Azure AD account to be able to sign in. -->
-            <Item Key="ValidTokenIssuerPrefixes">https://{your Identity Server root URL}</Item>
+            <Item Key="ValidTokenIssuerPrefixes">https://nimccollfta-idsrv4.azurewebsites.net</Item>
           </Metadata>
           <CryptographicKeys>
             <Key Id="client_secret" StorageReferenceId="B2C_1A_IdentityServer4Secret" />
@@ -180,7 +210,7 @@
       <DisplayName>Retrieve Consent API</DisplayName>
       <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
       <Metadata>
-        <Item Key="ServiceUrl">https://{your REST API URL}/api/consent</Item>
+        <Item Key="ServiceUrl">https://nimccfta-b2cconsent.azurewebsites.net/api/consent</Item>
         <Item Key="SendClaimsIn">QueryString</Item>
         <!-- Set AuthenticationType to Basic or ClientCertificate in production environments -->
         <Item Key="AuthenticationType">None</Item>
@@ -195,10 +225,13 @@
         <OutputClaim ClaimTypeReferenceId="application_id" PartnerClaimType="clientId" />
         <OutputClaim ClaimTypeReferenceId="objectId" PartnerClaimType="objectId" />
         <OutputClaim ClaimTypeReferenceId="extension_hasConsented" PartnerClaimType="hasConsented" />
+        <OutputClaim ClaimTypeReferenceId="role" PartnerClaimType="userRole" />
         <OutputClaim ClaimTypeReferenceId="original_hasConsented" />
+        <OutputClaim ClaimTypeReferenceId="roles" />
       </OutputClaims>
       <OutputClaimsTransformations>
 				<OutputClaimsTransformation ReferenceId="CopyHasConsented" />
+				<OutputClaimsTransformation ReferenceId="AddUserRole" />
 			</OutputClaimsTransformations>      
       <UseTechnicalProfileForSessionManagement ReferenceId="SM-Noop" />
     </TechnicalProfile>
@@ -206,7 +239,7 @@
       <DisplayName>Retrieve Consent API</DisplayName>
       <Protocol Name="Proprietary" Handler="Web.TPEngine.Providers.RestfulProvider, Web.TPEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
       <Metadata>
-        <Item Key="ServiceUrl">https://{your REST API URL}/api/updateconsent</Item>
+        <Item Key="ServiceUrl">https://nimccfta-b2cconsent.azurewebsites.net/api/updateconsent</Item>
         <Item Key="SendClaimsIn">QueryString</Item>
         <!-- Set AuthenticationType to Basic or ClientCertificate in production environments -->
         <Item Key="AuthenticationType">None</Item>

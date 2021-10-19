@@ -4,17 +4,22 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06"
   PolicySchemaVersion="0.3.0.0"
-  TenantId="{your b2c tenant name here}.onmicrosoft.com"
+  TenantId="nimccollorgtenant.onmicrosoft.com"
   PolicyId="B2C_1A_SAMLSP_signup_signin"
-  PublicPolicyUri="http://{your b2c tenant name here}.onmicrosoft.com/B2C_1A_SAMLSP_signup_signin">
+  PublicPolicyUri="http://nimccollorgtenant.onmicrosoft.com/B2C_1A_SAMLSP_signup_signin"
+  DeploymentMode="Development"
+  UserJourneyRecorderEndpoint="urn:journeyrecorder:applicationinsights">
 
   <BasePolicy>
-    <TenantId>{your b2c tenant name here}.onmicrosoft.com</TenantId>
+    <TenantId>nimccollorgtenant.onmicrosoft.com</TenantId>
     <PolicyId>B2C_1A_SAMLSP_TrustFrameworkExtensions</PolicyId>
   </BasePolicy>
 
   <RelyingParty>
     <DefaultUserJourney ReferenceId="SignUpOrSignInSalesforce" />
+    <UserJourneyBehaviors>
+      <JourneyInsights TelemetryEngine="ApplicationInsights" InstrumentationKey="66fb3504-1d30-466d-ae8f-6664bea974d1" DeveloperMode="true" ClientEnabled="false" ServerEnabled="true" TelemetryVersion="1.0.0" />
+    </UserJourneyBehaviors>
     <TechnicalProfile Id="PolicyProfile">
       <DisplayName>PolicyProfile</DisplayName>
       <Protocol Name="OpenIdConnect" />
@@ -27,6 +32,7 @@
         <OutputClaim ClaimTypeReferenceId="identityProvider" />
         <OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}" />
         <OutputClaim ClaimTypeReferenceId="extension_hasConsented" />
+        <OutputClaim ClaimTypeReferenceId="roles" />
       </OutputClaims>
       <SubjectNamingInfo ClaimType="sub" />
     </TechnicalProfile>
